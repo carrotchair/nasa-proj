@@ -1,7 +1,5 @@
-const axios = require('axios');
-const https = require('https');
-require('dotenv').config();
-const errorHandler = require('./errorMiddleware');
+import axios from 'axios';
+import https from 'https';
 
 const nasaApiUrl = 'https://api.nasa.gov/neo/rest/v1/feed';
 
@@ -43,4 +41,4 @@ async function getMeteorsData() {
   }
 }
 
-module.exports = { getMeteorsData };
+export default getMeteorsData;
