@@ -16,14 +16,14 @@ function getLastMonday() {
   return lastMonday.toISOString().split('T')[0];
 }
 
-async function getMeteorsData() {
+async function getMeteorData() {
   try {
     const apiKey = process.env.NASA_API_KEY;
     const startDate = getLastMonday();
     const endDate = getCurrentDate();
 
-    const httpsAgent = new https.Agent({  
-        rejectUnauthorized: false
+    const httpsAgent = new https.Agent({
+      rejectUnauthorized: false,
     });
 
     const response = await axios.get(nasaApiUrl, {
@@ -32,7 +32,7 @@ async function getMeteorsData() {
         end_date: endDate,
         api_key: apiKey,
       },
-      httpsAgent: httpsAgent
+      httpsAgent: httpsAgent,
     });
 
     return response.data.near_earth_objects;
@@ -41,4 +41,4 @@ async function getMeteorsData() {
   }
 }
 
-export default getMeteorsData;
+export default getMeteorData;

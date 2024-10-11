@@ -1,8 +1,9 @@
 import express from 'express';
 import meteorRouter from './delivery/meteorController.js';
+import config from './config/config.js';
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = config.port;
 
 app.use(meteorRouter);
 
