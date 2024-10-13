@@ -1,7 +1,8 @@
 import axios from 'axios';
 import https from 'https';
+import config from '../config/config.js';
 
-const nasaApiUrl = 'https://api.nasa.gov/neo/rest/v1/feed';
+const nasaApiUrl = config.nasaMeteorUrl;
 
 function getCurrentDate() {
   const date = new Date();
@@ -18,7 +19,7 @@ function getLastMonday() {
 
 async function getMeteorData() {
   try {
-    const apiKey = process.env.NASA_API_KEY;
+    const apiKey = config.apieKey;
     const startDate = getLastMonday();
     const endDate = getCurrentDate();
 
@@ -30,7 +31,7 @@ async function getMeteorData() {
       params: {
         start_date: startDate,
         end_date: endDate,
-        api_key: apiKey,
+        api_key: apiKey
       },
       httpsAgent: httpsAgent,
     });
