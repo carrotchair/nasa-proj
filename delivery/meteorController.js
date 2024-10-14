@@ -1,6 +1,7 @@
 import express from 'express';
 import getMeteorFilteredData from '../use-cases/meteorDataCase.js';
 import getMeteorData from '../repository/meteorClient.js';
+import { getLastMonday, getCurrentDate } from '../repository/meteorClient.js';
 
 const meteorRouter = express.Router();
 
@@ -10,26 +11,27 @@ meteorRouter.get('/', (req, res) => {
 
 meteorRouter.get('/meteors', async (req, res) => {
   try {
-    const meteorData = await getMeteorData();
-    res.json({
-      message: 'Meteors observed from Monday to today',
-      data: meteorData
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+    let { startDate, endDate, count, wereDangerousMeteors} = req.query;
+    ({ startDate, endDate } = setDefaultDates(startDate, endDate));
 
-meteorRouter.get('/filter-meteors', async (req, res) => {
-  try {
-    const meteorFileteredData = await getMeteorFilteredData();
+    const meteorFileteredData = await getMeteorFilteredData(startDate, endDate, Boolean(count), Boolean(wereDangerousMeteors));
     res.json({
-      message: 'Meteors observed from Monday to today',
+      message: `Meteors observed from ${startDate} to ${endDate}`,
       data: meteorFileteredData
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
+const setDefaultDates = (startDate, endDate) => {
+  if (!startDate) {
+    startDate = getLastMonday();
+  }
+  if (!endDate) {
+    endDate = getCurrentDate();
+  }
+  return { startDate, endDate };
+}
 
 export default meteorRouter;

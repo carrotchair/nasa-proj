@@ -1,7 +1,8 @@
+import { response } from 'express';
 import getMeteorData from '../repository/meteorClient.js';
 
-const getMeteorFilteredData = async () => {
-  const meteorData = await getMeteorData();
+const getMeteorFilteredData = async (startDate, endDate, count, wereDangerousMeteors) => {
+  const meteorData = await getMeteorData(startDate, endDate);
   const filteredMeteorList = [];
 
   Object.values(meteorData).forEach((value) => {
@@ -20,7 +21,17 @@ const getMeteorFilteredData = async () => {
     });
   });
 
-  return filteredMeteorList;
+  const responseData = { meteorData: filteredMeteorList };
+
+  if(count) {
+    responseData.count = filteredMeteorList.length;
+  }
+
+  if(wereDangerousMeteors) {
+    responseData.wereDangerousMeteors = filteredMeteorList.some(meteor => meteor.is_potentially_hazardous_asteroid);
+  }
+
+  return responseData;
 };
 
 export default getMeteorFilteredData;

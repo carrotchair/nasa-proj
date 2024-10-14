@@ -4,12 +4,12 @@ import config from '../config/config.js';
 
 const nasaApiUrl = config.nasaMeteorUrl;
 
-function getCurrentDate() {
+export function getCurrentDate() {
   const date = new Date();
   return date.toISOString().split('T')[0];
 }
 
-function getLastMonday() {
+export function getLastMonday() {
   const date = new Date();
   const day = date.getDay();
   const diff = date.getDate() - day + (day === 0 ? -6 : 1);
@@ -17,11 +17,9 @@ function getLastMonday() {
   return lastMonday.toISOString().split('T')[0];
 }
 
-async function getMeteorData() {
+async function getMeteorData(startDate, endDate) {
   try {
     const apiKey = config.apieKey;
-    const startDate = getLastMonday();
-    const endDate = getCurrentDate();
 
     const httpsAgent = new https.Agent({
       rejectUnauthorized: false,
