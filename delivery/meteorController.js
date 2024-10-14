@@ -12,6 +12,7 @@ meteorRouter.get('/', (req, res) => {
 meteorRouter.get('/meteors', async (req, res) => {
   try {
     let { startDate, endDate } = req.query;
+
     ({ startDate, endDate } = setDefaultDates(startDate, endDate));
 
     const meteorFileteredData = await getMeteorFilteredData(startDate, endDate);
