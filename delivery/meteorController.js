@@ -12,13 +12,7 @@ meteorRouter.get('/', (req, res) => {
 meteorRouter.get('/meteors', async (req, res) => {
   try {
     let { startDate, endDate } = req.query;
-    
-    if (!startDate) {
-      startDate = getLastMonday();
-    }
-    if (!endDate) {
-      endDate = getCurrentDate();
-    }
+    ({ startDate, endDate } = setDefaultDates(startDate, endDate));
 
     const meteorFileteredData = await getMeteorFilteredData(startDate, endDate);
     res.json({
@@ -29,5 +23,15 @@ meteorRouter.get('/meteors', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+const setDefaultDates = (startDate, endDate) => {
+  if (!startDate) {
+    startDate = getLastMonday();
+  }
+  if (!endDate) {
+    endDate = getCurrentDate();
+  }
+  return { startDate, endDate };
+}
 
 export default meteorRouter;
