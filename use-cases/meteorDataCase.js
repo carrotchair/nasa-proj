@@ -1,7 +1,7 @@
 import getMeteorData from '../repository/meteorClient.js';
 
-const getMeteorFilteredData = async () => {
-  const meteorData = await getMeteorData();
+const getMeteorFilteredData = async (startDate, endDate) => {
+  const meteorData = await getMeteorData(startDate, endDate);
   const filteredMeteorList = [];
 
   Object.values(meteorData).forEach((value) => {
