@@ -10,7 +10,7 @@ const getMeteorFilteredData = async (startDate, endDate, count, wereDangerousMet
       filteredMeteorList.push({
         id: meteor.id,
         name: meteor.name,
-        diameter_in_meters: meteor.estimated_diameter.meters,
+        diameter_in_meters: meteor.estimated_diameter?.meters?.estimated_diameter_max,
         is_potentially_hazardous_meteor:
           meteor.is_potentially_hazardous_asteroid,
         close_approach_date_full:
@@ -28,7 +28,7 @@ const getMeteorFilteredData = async (startDate, endDate, count, wereDangerousMet
   }
 
   if(wereDangerousMeteors) {
-    responseData.wereDangerousMeteors = filteredMeteorList.some(meteor => meteor.is_potentially_hazardous_asteroid);
+    responseData.wereDangerousMeteors = filteredMeteorList.some(meteor => meteor.is_potentially_hazardous_meteor);
   }
 
   return responseData;
