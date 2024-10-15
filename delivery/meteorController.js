@@ -15,7 +15,8 @@ meteorRouter.get('/meteors', async (req, res) => {
     ({ startDate, endDate } = setDefaultDates(startDate, endDate));
 
     const meteorFileteredData = await getMeteorFilteredData(startDate, endDate, Boolean(count), Boolean(wereDangerousMeteors));
-    res.json({
+    
+    res.render('meteors.njk', {
       message: `Meteors observed from ${startDate} to ${endDate}`,
       data: meteorFileteredData
     });

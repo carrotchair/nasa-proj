@@ -1,0 +1,17 @@
+{% extends 'base.njk' %}
+
+{% set title = 'Home' %}
+
+{% block content %}
+    <h1>{{ message }}</h1>
+  <ul>
+    {% for meteor in meteorData %}
+      <li>
+        <strong>{{ meteor.name }}</strong>:
+        <br>{{ meteor.estimated_diameter.meters }}
+      </li>
+    {% else %}
+      <li>No meteor data available.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
