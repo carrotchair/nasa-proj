@@ -9,18 +9,21 @@ meteorRouter.get('/', (req, res) => {
   res.send('Hello, NASA!');
 });
 
-meteorRouter.get('/meteors', async (req, res) => {
+meteorRouter.get('/meteors', async (req, res, next) => {
   try {
     let { startDate, endDate, count, wereDangerousMeteors} = req.query;
     ({ startDate, endDate } = setDefaultDates(startDate, endDate));
 
     const meteorFileteredData = await getMeteorFilteredData(startDate, endDate, Boolean(count), Boolean(wereDangerousMeteors));
-    res.json({
+
+    res.render('../views/meteors.njk', {
       message: `Meteors observed from ${startDate} to ${endDate}`,
-      data: meteorFileteredData
+      meteorData: meteorFileteredData.meteorData,
+      wereDangerousMeteors: meteorFileteredData.wereDangerousMeteors,
+      count: meteorFileteredData.count
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 });
 

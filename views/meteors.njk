@@ -1,0 +1,38 @@
+{% extends 'base.njk' %}
+
+{% set title = 'Home' %}
+
+{% block content %}
+    <h1>{{ message }}</h1>
+
+    {% if wereDangerousMeteors %}
+        <p>There were potentially hazardous meteors.</p>
+    {% elseif wereDangerousMeteors==false %}
+        <p>There are no hazardous meteors.</p>
+    {% endif %}
+    {% if count %}
+        <p>Total number of meteors: {{ count }}</p>
+    {% endif %}
+
+    {% for meteor in meteorData %}
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Diameter</th>
+                <th>Hazardous</th>
+                <th>Date</th>
+                <th>Velocity</th>
+            </tr>
+            <tr>
+                <td>{{ meteor.name }}</td>
+                <td>{{ meteor.diameter_in_meters }}</td>
+                <td>{{ meteor.is_potentially_hazardous_meteor }}</td>
+                <td>{{ meteor.close_approach_date_full }}</td>
+                <td>{{ meteor.relative_velocity_kilometers_per_second }}</td>
+            </tr>
+        </table>
+    {% else %}
+      <li>No meteor data available.</li>
+    {% endfor %}
+
+{% endblock %}
