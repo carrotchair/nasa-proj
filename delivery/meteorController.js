@@ -2,6 +2,8 @@ import express from 'express';
 import getMeteorFilteredData from '../use-cases/meteorDataCase.js';
 import { getLastMonday, getCurrentDate } from '../repository/meteorClient.js';
 import getLatestRoverPhoto from '../use-cases/roverCase.js';
+import meteorSchema from '../schemas/meteorSchema.js';
+import roverPhotoSchema from '../schemas/roverPhotoSchema.js';
 
 const meteorRouter = express.Router();
 

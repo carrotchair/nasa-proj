@@ -1,4 +1,3 @@
-import { response } from 'express';
 import getMeteorData from '../repository/meteorClient.js';
 
 const getMeteorFilteredData = async (startDate, endDate, count, wereDangerousMeteors) => {
