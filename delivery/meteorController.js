@@ -27,19 +27,19 @@ meteorRouter.get('/meteors', async (req, res, next) => {
   }
 });
 
-meteorRouter.post('/rover-image', async (req, res) => {
+meteorRouter.post('/rover-image', async (req, res, next) => {
   try {
     const { userId, userName, apiKey } = req.body;
     const photo = await getLatestRoverPhoto(apiKey);
 
-    res.json({
-      message: `Hey ${userName}. Your id is: ${userId}. Latest photo from rover: ${photo}`,
+    res.render('../views/roverPhoto.njk', {
+      message: `Hey ${userName}. Your id is: ${userId}.`,
       userId: Number(userId),
       userName: userName,
       photoUrl: photo,
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 });
 
