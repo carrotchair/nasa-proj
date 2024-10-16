@@ -1,7 +1,7 @@
 import express from 'express';
 import getMeteorFilteredData from '../use-cases/meteorDataCase.js';
-import getMeteorData from '../repository/meteorClient.js';
 import { getLastMonday, getCurrentDate } from '../repository/meteorClient.js';
+import getLatestRoverPhoto from '../use-cases/roverCase.js';
 
 const meteorRouter = express.Router();
 
@@ -21,6 +21,22 @@ meteorRouter.get('/meteors', async (req, res, next) => {
       meteorData: meteorFileteredData.meteorData,
       wereDangerousMeteors: meteorFileteredData.wereDangerousMeteors,
       count: meteorFileteredData.count
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+meteorRouter.post('/rover-image', async (req, res, next) => {
+  try {
+    const { userId, userName, apiKey } = req.body;
+    const photo = await getLatestRoverPhoto(apiKey);
+
+    res.render('../views/roverPhoto.njk', {
+      message: `Hey ${userName}. Your id is: ${userId}.`,
+      userId: Number(userId),
+      userName: userName,
+      photoUrl: photo,
     });
   } catch (error) {
     next(error);

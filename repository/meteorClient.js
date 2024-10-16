@@ -18,26 +18,22 @@ export function getLastMonday() {
 }
 
 async function getMeteorData(startDate, endDate) {
-  try {
-    const apiKey = config.apieKey;
+  const apiKey = config.apieKey;
 
-    const httpsAgent = new https.Agent({
-      rejectUnauthorized: false,
-    });
+  const httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+  });
 
-    const response = await axios.get(nasaApiUrl, {
-      params: {
-        start_date: startDate,
-        end_date: endDate,
-        api_key: apiKey
-      },
-      httpsAgent: httpsAgent,
-    });
+  const response = await axios.get(nasaApiUrl, {
+    params: {
+      start_date: startDate,
+      end_date: endDate,
+      api_key: apiKey,
+    },
+    httpsAgent: httpsAgent,
+  });
 
-    return response.data.near_earth_objects;
-  } catch (error) {
-    throw new Error(`Error getting meteors data: ${error.message}`);
-  }
+  return response.data.near_earth_objects;
 }
 
 export default getMeteorData;
