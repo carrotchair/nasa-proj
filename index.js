@@ -5,6 +5,7 @@ import nunjucks from 'nunjucks';
 
 const app = express();
 const PORT = config.port;
+app.use(express.json())
 
 nunjucks.configure('views', {
   autoescape: true,
