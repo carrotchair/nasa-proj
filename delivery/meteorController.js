@@ -9,7 +9,7 @@ meteorRouter.get('/', (req, res) => {
   res.send('Hello, NASA!');
 });
 
-meteorRouter.get('/meteors', async (req, res) => {
+meteorRouter.get('/meteors', async (req, res, next) => {
   try {
     let { startDate, endDate, count, wereDangerousMeteors} = req.query;
     ({ startDate, endDate } = setDefaultDates(startDate, endDate));
@@ -23,7 +23,7 @@ meteorRouter.get('/meteors', async (req, res) => {
       count: meteorFileteredData.count
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 });
 
