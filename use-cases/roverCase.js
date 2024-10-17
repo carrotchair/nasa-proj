@@ -1,5 +1,8 @@
 import getRoverPhotos from '../repository/roverClient.js';
 import config from '../config/config.js';
+import { StatusCodes } from 'http-status-codes';
+import Exception from '../error_handler/Exception.js';
+
 
 const getLatestRoverPhoto = async (apiKey) => {
   const roverPhotos = await getRoverPhotos(apiKey);
