@@ -7,6 +7,7 @@ import errorHandler from './error_handler/errorMidleware.js';
 const app = express();
 const PORT = config.port;
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 
 nunjucks.configure('views', {
   autoescape: true,
