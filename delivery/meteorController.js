@@ -34,6 +34,12 @@ meteorRouter.get('/meteors', async (req, res, next) => {
   }
 });
 
+meteorRouter.get('/rover-form', (req, res) => {
+  res.render('../views/roverForm.njk', {
+    title: 'Rover Photo Request',
+  });
+});
+
 meteorRouter.post('/rover-image', async (req, res, next) => {
   const { error } = rangePhotoQuerySchema.validate(req.body);
   if (error) {

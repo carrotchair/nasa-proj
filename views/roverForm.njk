@@ -1,0 +1,17 @@
+{% extends 'base.njk' %}
+
+{% block content %}
+  <h1>{{ title }}</h1>
+  <form action="/rover-image" method="POST">
+    <label for="userId">User ID:</label>
+    <input type="text" id="userId" name="userId" required>
+
+    <label for="userName">User Name:</label>
+    <input type="text" id="userName" name="userName" required>
+
+    <label for="apiKey">User API Key:</label>
+    <input type="text" id="apiKey" name="apiKey" required>
+
+    <button type="submit">Get Rover Photo</button>
+  </form>
+{% endblock %}
