@@ -2,8 +2,7 @@ import express from 'express';
 import getMeteorFilteredData from '../use-cases/meteorDataCase.js';
 import { getLastMonday, getCurrentDate } from '../repository/meteorClient.js';
 import getLatestRoverPhoto from '../use-cases/roverCase.js';
-import { meteorQuerySchema } from '../schemas/meteorSchema.js';
-import { rangePhotoQuerySchema } from '../schemas/rangePhotoSchema.js';
+import { validateMeteorQuerySchema, validateRangePhotoQuerySchema } from '../schemas/validateQuery.js';
 
 const meteorRouter = express.Router();
 
@@ -11,12 +10,7 @@ meteorRouter.get('/', (req, res) => {
   res.send('Hello, NASA!');
 });
 
-meteorRouter.get('/meteors', async (req, res, next) => {
-  const { error } = meteorQuerySchema.validate(req.query);
-  if (error) {
-    return res.status(400).json({ error: error.details[0].message });
-  }
-
+meteorRouter.get('/meteors', validateMeteorQuerySchema, async (req, res, next) => {
   try {
     let { startDate, endDate, count, wereDangerousMeteors} = req.query;
     ({ startDate, endDate } = setDefaultDates(startDate, endDate));
@@ -40,12 +34,7 @@ meteorRouter.get('/rover-form', (req, res) => {
   });
 });
 
-meteorRouter.post('/rover-image', async (req, res, next) => {
-  const { error } = rangePhotoQuerySchema.validate(req.body);
-  if (error) {
-    return res.status(400).json({ error: error.details[0].message });
-  }
-
+meteorRouter.post('/rover-image', validateRangePhotoQuerySchema, async(req, res, next) => {
   try {
     const { userId, userName, apiKey } = req.body;
     const photo = await getLatestRoverPhoto(apiKey);
