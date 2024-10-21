@@ -3,7 +3,6 @@ import config from '../config/config.ts';
 import { StatusCodes } from 'http-status-codes';
 import Exception from '../error_handler/Exception.ts';
 
-// Define types for the rover photos and their properties
 interface RoverPhoto {
   sol: number;
   img_src: string;
@@ -13,7 +12,6 @@ interface RoverPhotosResponse {
   latest_photos: RoverPhoto[];
 }
 
-// The function to get the latest rover photo
 const getLatestRoverPhoto = async (apiKey: string): Promise<string> => {
   const roverPhotos: RoverPhotosResponse = await getRoverPhotos(apiKey);
 

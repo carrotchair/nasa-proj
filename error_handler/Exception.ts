@@ -5,7 +5,6 @@ class Exception extends Error {
     super(message);
     this.code = code;
 
-    // Maintains proper stack trace (useful for debugging)
     Object.setPrototypeOf(this, Exception.prototype);
   }
 }

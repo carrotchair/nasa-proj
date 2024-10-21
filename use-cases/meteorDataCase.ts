@@ -41,7 +41,6 @@ const getMeteorFilteredData = async (
   const meteorData: Record<string, Meteor[]> = await getMeteorData(startDate, endDate);
   const filteredMeteorList: FilteredMeteor[] = [];
 
-  // Process and filter meteor data
   Object.values(meteorData).forEach((value) => {
     value.forEach((meteor) => {
       filteredMeteorList.push({
@@ -55,7 +54,6 @@ const getMeteorFilteredData = async (
     });
   });
 
-  // Build the response data
   const responseData: MeteorResponseData = { meteorData: filteredMeteorList };
 
   if (count) {
